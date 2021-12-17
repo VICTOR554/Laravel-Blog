@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,11 @@ Route::get('/dashboard', function () {
 Route::get('/blog/{post?}', function ($post = null) {
     return view('blog', ['post' =>$post]);
 });
+
+Route::get('/posts', [PostController::class, 'index']);
+
+Route::get('/posts/{id}', [PostController::class, 'show'])
+        ->name('posts.show');
 
 
 Route::redirect('/', '/blog', 301);
