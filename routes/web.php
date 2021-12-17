@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,23 +16,29 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $post = Post::all();
+    return view('welcome', ['posts' => $post]);
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/blog/{post?}', function ($post = null) {
-    return view('blog', ['post' =>$post]);
-});
-
-Route::get('/posts', [PostController::class, 'index']);
-
-Route::get('/posts/{id}', [PostController::class, 'show'])
-        ->name('posts.show');
 
 
-Route::redirect('/', '/blog', 301);
+Route::resource('posts', PostController::class);
+
+
+
+// Route::get('/blog/{post?}' , function ($post = null) {
+//     return view('blog', ['post' =>$post]);
+// });
+
+// Route::get('/posts', [PostController::class, 'index']);
+
+// Route::get('/posts/{id}', [PostController::class, 'show'])
+//         ->name('posts.show');
+
+
 
 require __DIR__.'/auth.php';
