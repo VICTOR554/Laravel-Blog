@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+
+use App\Models\Comment;
 use App\Models\Post;
 
 /*
@@ -17,7 +20,8 @@ use App\Models\Post;
 
 Route::get('/', function () {
     $post = Post::all();
-    return view('welcome', ['posts' => $post]);
+    $comment = Comment::all();
+    return view('welcome', ['posts' => $post, 'comments' => $comment]);
 });
 
 Route::get('/dashboard', function () {
@@ -27,6 +31,8 @@ Route::get('/dashboard', function () {
 
 
 Route::resource('posts', PostController::class);
+Route::resource('comments', CommentController::class);
+
 
 
 

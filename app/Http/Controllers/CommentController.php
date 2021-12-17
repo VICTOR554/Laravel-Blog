@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\models\Post;
+use App\models\Comment;
 
-
-
-class PostController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view('welcome', ['posts' =>$posts]);
+        $comments = Comment::all();
+        return view('welcome', ['cooments' =>$comments]);
     }
 
     /**
@@ -28,7 +26,7 @@ class PostController extends Controller
     public function create()
     {
 
-        return view('posts.create');
+        return view('comments.create');
     }
 
     /**
@@ -41,12 +39,12 @@ class PostController extends Controller
     {
         $data = $request->all();
         $this->validate($request, [
-        'title' => 'required|max:250',
-        'description' => 'required|max:50',
-         'user_id' => 'required|integer',
+        'comment' => 'required|max:250',
+       'user_id' => 'required|integer',
+       'post_id' => 'required|integer',
          ]);
 
-        Post::create($data);
+        Comment::create($data);
         // return redirect("/posts",  [$post->id]);
          return redirect('/');
     }
@@ -57,10 +55,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        $post = Post::find($post->id);
-        return view(route ('posts.show', ['post' => $post]));
+        $comment = Comment::find($id);
+        return view(route ('/'));
     }
 
     /**
@@ -69,11 +67,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Comment $comment)
     {
-
-        return view('posts.edit', ['post' => $post]);
-
+        return view('comments.edit', ['comment' => $comment]);
     }
 
     /**
@@ -83,10 +79,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Comment $comment)
     {
         $data = $request->all();
-        $post->update($data);
+        $comment->update($data);
         return redirect('/');
     }
 
@@ -96,10 +92,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        $post = Post::find($id);
-        $post->delete();
+        $comment->delete();
         return redirect('/');
     }
 }

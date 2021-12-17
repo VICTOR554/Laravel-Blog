@@ -15,7 +15,7 @@ class PostTableSeeder extends Seeder
     {
         $p = new Post;
         $p->title = "The Daily Bugle";
-        $p->description = "The Earth was hit by a black meteorite";
+        $p->description =  "A black meteorite";
         $p->user_id = 1;
         $p->save();
 
